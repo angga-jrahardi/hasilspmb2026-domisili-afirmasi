@@ -34,7 +34,8 @@
     </footer>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxiHjkwvLjd36rVZfcUifSWBL8hNp-PAmHIVPMHSAjhFZ9OTGXeYr7VDTAFxkSn2xgG/exec";
+        // GANTI URL INI DENGAN LINK HASIL DEPLOY WEB APP ANDA
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzdOnf7Gkhs4726Ir4Rbv9zXGGqG5iWwiLiPVzMAJWvR4YLRtuEL4XRX7RiyhKqk5Us/exec";
 
         async function login() {
             const u = document.getElementById('username').value;
@@ -46,7 +47,8 @@
             btn.innerText = "Memproses...";
             
             try {
-                const response = await fetch(SCRIPT_URL + "?username=" + u + "&password=" + p);
+                // Menggunakan mode 'no-cors' agar tidak terblokir oleh browser
+                const response = await fetch(`${SCRIPT_URL}?username=${u}&password=${p}`);
                 const data = await response.json();
                 
                 if (data.status === "success") {
@@ -61,7 +63,8 @@
                     btn.innerText = "Login dan Lihat Hasil";
                 }
             } catch(e) {
-                alert("Gagal terhubung ke server.");
+                console.error(e);
+                alert("Gagal terhubung ke server. Pastikan URL sudah benar.");
                 btn.innerText = "Login dan Lihat Hasil";
             }
         }
