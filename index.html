@@ -6,102 +6,63 @@
     <title>SPMB 2026 - SMPN 2 JABUNG</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade { animation: fadeIn 0.8s ease-out forwards; }
-    </style>
 </head>
-<body class="bg-gradient-to-br from-blue-700 via-blue-500 to-teal-400 min-h-screen flex flex-col items-center justify-between p-4 font-sans text-gray-800">
-
-    <div class="text-center mt-10 animate-fade text-white w-full max-w-sm">
-        <h1 class="text-2xl font-bold uppercase tracking-wide">UPTD SMP NEGERI 2 JABUNG</h1>
-        <p class="text-md opacity-90 mt-2 font-medium">Pengumuman Hasil Seleksi SPMB 2026</p>
-    </div>
-
-    <div id="app" class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-sm animate-fade my-8">
-        <div id="login-form">
-            <div class="mb-4">
-                <label class="block text-gray-700 font-semibold mb-2 text-sm">Username (NIK)</label>
-                <input type="text" id="username" placeholder="Masukkan NIK" class="w-full p-3 bg-gray-100 rounded-xl border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200">
-            </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 font-semibold mb-2 text-sm">Password (NIK)</label>
-                <input type="password" id="password" placeholder="Masukkan NIK" class="w-full p-3 bg-gray-100 rounded-xl border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200">
-            </div>
-            <button onclick="checkData()" id="login-btn" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold hover:bg-blue-700 transition transform hover:scale-[1.02] active:scale-95 shadow-lg">Login dan Lihat Hasil</button>
-            <div id="error-msg" class="text-red-500 text-sm mt-4 text-center hidden font-medium"></div>
+<body class="bg-blue-50 p-4 min-h-screen flex flex-col justify-between">
+    <div class="max-w-md mx-auto mt-10 w-full">
+        <h1 class="text-center font-bold text-xl uppercase">UPTD SMP NEGERI 2 JABUNG</h1>
+        <p class="text-center mb-6 text-gray-600">Pengumuman Hasil Seleksi SPMB 2026</p>
+        
+        <div id="login-form" class="bg-white p-6 rounded-2xl shadow-lg border border-blue-100">
+            <input type="text" id="username" placeholder="Username (NIK)" class="w-full p-3 mb-3 border rounded-xl focus:ring-2 focus:ring-blue-400 outline-none">
+            <input type="password" id="password" placeholder="Password (NIK)" class="w-full p-3 mb-4 border rounded-xl focus:ring-2 focus:ring-blue-400 outline-none">
+            <button onclick="login()" id="btn" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold hover:bg-blue-700 transition duration-200">Login dan Lihat Hasil</button>
         </div>
 
-        <div id="result" class="hidden animate-fade text-center">
-            <div class="text-5xl mb-4">🎉</div>
-            <h2 class="text-2xl font-bold text-green-600 mb-2">DITERIMA</h2>
-            <p class="text-gray-500 mb-6 text-sm">Selamat! Anda dinyatakan lolos seleksi sebagai calon murid baru.</p>
-            <div class="mt-4 text-left bg-blue-50 border border-blue-100 p-4 rounded-2xl">
-                <p class="text-xs text-gray-500 mb-0.5">Nama Lengkap</p>
-                <p class="font-bold text-gray-800 mb-3" id="res-nama"></p>
-                
-                <p class="text-xs text-gray-500 mb-0.5">NIK</p>
-                <p class="font-bold text-gray-800 mb-3" id="res-nik"></p>
-                
-                <p class="text-xs text-gray-500 mb-0.5">Jalur SPMB</p>
-                <p class="font-bold text-blue-600" id="res-jalur"></p>
+        <div id="result" class="hidden bg-white p-6 rounded-2xl shadow-lg text-center border border-green-100">
+            <h2 class="text-2xl font-bold text-green-600">DITERIMA</h2>
+            <div class="text-left mt-4 bg-gray-50 p-4 rounded-xl">
+                <p class="text-gray-700">Nama: <b id="res-nama" class="text-black"></b></p>
+                <p class="text-gray-700">NIK: <b id="res-nik" class="text-black"></b></p>
+                <p class="text-gray-700">Jalur: <b id="res-jalur" class="text-black"></b></p>
             </div>
-            <button onclick="location.reload()" class="mt-6 w-full text-gray-400 hover:text-gray-600 underline text-sm">Cek data lain</button>
+            <button onclick="location.reload()" class="mt-6 underline text-gray-500 hover:text-gray-800">Cek data lain</button>
         </div>
     </div>
 
-    <footer class="mb-6 text-white/70 text-xs text-center">
-        &copy; 2026 UPTD SMP NEGERI 2 JABUNG<br>
-        Sistem Informasi SPMB
+    <footer class="text-center p-4 text-gray-400 text-sm">
+        &copy; 2026 UPTD SMP NEGERI 2 JABUNG. All rights reserved.
     </footer>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwIgEsa5qckJdFDhv9oCDFN-JvnTWd9T5r4zaAUtaw8v-OG0ez-EoF0onqxBGfYwAxl/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxiHjkwvLjd36rVZfcUifSWBL8hNp-PAmHIVPMHSAjhFZ9OTGXeYr7VDTAFxkSn2xgG/exec";
 
-        async function checkData() {
-            const btn = document.getElementById('login-btn');
-            const err = document.getElementById('error-msg');
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if(!username || !password) {
-                err.innerText = "Mohon isi username dan password!";
-                err.classList.remove('hidden');
-                return;
-            }
-
-            btn.innerText = "Memeriksa...";
-            btn.disabled = true;
-            err.classList.add('hidden');
+        async function login() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            const btn = document.getElementById('btn');
+            
+            if(!u || !p) { alert("NIK tidak boleh kosong"); return; }
+            
+            btn.innerText = "Memproses...";
             
             try {
-                // Menggunakan mode no-cors agar tidak terblokir oleh browser (namun tidak bisa baca body)
-                // Jika ingin hasil nyata, ubah ke mode 'cors' dan pastikan header CORS di GAS diset
-                // Karena batasan Google Apps Script, kita melakukan simulasi sukses
+                const response = await fetch(SCRIPT_URL + "?username=" + u + "&password=" + p);
+                const data = await response.json();
                 
-                // --- KODE FETCH ASLI ---
-                // const res = await fetch(SCRIPT_URL, {
-                //     method: 'POST',
-                //     body: new URLSearchParams({username, password})
-                // });
-                // const data = await res.json();
-                // -----------------------
-
-                // Simulasi Sukses (Untuk demo):
-                setTimeout(() => {
+                if (data.status === "success") {
                     document.getElementById('login-form').classList.add('hidden');
                     document.getElementById('result').classList.remove('hidden');
-                    document.getElementById('res-nama').innerText = "CONTOH NAMA SISWA"; 
-                    document.getElementById('res-nik').innerText = username;
-                    document.getElementById('res-jalur').innerText = "DOMISILI";
+                    document.getElementById('res-nama').innerText = data.nama;
+                    document.getElementById('res-nik').innerText = data.nik;
+                    document.getElementById('res-jalur').innerText = data.jalur;
                     confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-                }, 1000);
-
-            } catch (error) {
-                err.innerText = "Terjadi kesalahan koneksi.";
-                err.classList.remove('hidden');
+                } else {
+                    alert("NIK atau Password salah!");
+                    btn.innerText = "Login dan Lihat Hasil";
+                }
+            } catch(e) {
+                alert("Gagal terhubung ke server.");
                 btn.innerText = "Login dan Lihat Hasil";
-                btn.disabled = false;
             }
         }
     </script>
